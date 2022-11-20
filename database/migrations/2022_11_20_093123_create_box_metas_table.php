@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('box_metas', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('box_id');
             $table->string('meta_key');
             $table->text('meta_value');
             $table->softDeletes();
