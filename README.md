@@ -25,7 +25,15 @@ It will remove all the complications from your side, you will have elegant apis 
 - Laravel
 - Cryptography
 
+## Models
+- Users
+- UserMetas
+- Blocks
+- BlockMetas
+- Boxes
+- BoxMetas
+
 ## Authors
-- Mubashir Rasool Razvi [SP19-BSE-006](sp19-bse-006@cuilahore.edu.pk)
-- Saad Shafiq [SP19-BSE-120](sp19-bse-120@cuilahore.edu.pk)
-- Hassan Abbas [SP19-BSE-003](sp19-bse-003@cuilahore.edu.pk)
+- Mubashir Rasool Razvi [SP19-BSE-006](mailto:sp19-bse-006@cuilahore.edu.pk)
+- Saad Shafiq [SP19-BSE-120](mailto:sp19-bse-120@cuilahore.edu.pk)
+- Hassan Abbas [SP19-BSE-003](mailto:sp19-bse-003@cuilahore.edu.pk)
