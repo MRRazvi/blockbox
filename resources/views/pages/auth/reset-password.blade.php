@@ -1,9 +1,9 @@
 @extends('layouts.auth')
 
-@section('title', 'Login')
+@section('title', 'Reset Password')
 
 @section('content')
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
 
     @foreach($errors->all() as $error)
         <div class="alert alert-danger alert-dismissible">
@@ -12,15 +12,9 @@
         </div>
     @endforeach
 
-    @if (session('status'))
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            {{ session('status') }}
-        </div>
-    @endif
-
-    <form action="/login" method="POST" class="mb-3">
+    <form action="/reset-password" method="POST">
         @csrf
+        <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
         <div class="input-group mb-3">
             <input type="email" class="form-control" placeholder="Email" name="email" value="{{ @old('email') }}">
@@ -40,24 +34,23 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-8">
-                <div class="icheck-primary">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Remember Me</label>
+        <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
                 </div>
             </div>
-            <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block">Change password</button>
             </div>
         </div>
     </form>
 
-    <p class="mb-1">
-        <a href="{{ @route('password.request') }}">Forgot Password</a>
-    </p>
-
-    <p class="mb-0">
-        <a href="{{ @route('register') }}" class="text-center">Register</a>
+    <p class="mt-3 mb-1">
+        <a href="{{ @route('login') }}">Login</a>
     </p>
 @endsection

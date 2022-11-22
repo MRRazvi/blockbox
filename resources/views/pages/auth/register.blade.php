@@ -16,7 +16,7 @@
         @csrf
 
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Full name" name="name" value="{{ @old('name') }}">
+            <input type="text" class="form-control" placeholder="Full Name" name="name" value="{{ @old('name') }}">
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user"></span>
@@ -52,7 +52,7 @@
         </div>
 
         <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Retype password" name="password_confirmation">
+            <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation">
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-lock"></span>
@@ -79,6 +79,6 @@
     </form>
 
     <p class="mb-0">
-        <a href="{{ @route('login') }}" class="text-center">I already have an account</a>
+        <a href="{{ @route('login') }}" class="text-center">Login</a>
     </p>
 @endsection

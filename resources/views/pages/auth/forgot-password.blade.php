@@ -39,10 +39,10 @@
     </form>
 
     <p class="mt-3 mb-1">
-        <a href="{{ @route('login') }}">I already have an account</a>
+        <a href="{{ @route('login') }}">Login</a>
     </p>
 
     <p class="mb-0">
-        <a href="{{ @route('register') }}" class="text-center">Register a new account</a>
+        <a href="{{ @route('register') }}" class="text-center">Register</a>
     </p>
 @endsection
