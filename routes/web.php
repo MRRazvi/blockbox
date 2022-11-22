@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return 'home';
-})->name('home');
+Route::middleware(['verified'])
+    ->prefix('dashboard')
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    });
 
-Route::get('/dashboard', function () {
-    return view('pages.app.dashboard');
-})->name('dashboard')->middleware(['verified']);
-
-
+Route::get('/', function () {})->name('home');
 Route::get('/terms', function () {})->name('terms');
 Route::get('/privacy', function () {})->name('privacy');
