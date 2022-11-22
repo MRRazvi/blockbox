@@ -10,5 +10,9 @@
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+        </form>
+
         @include('includes.app.navbar')
         @include('includes.app.aside')

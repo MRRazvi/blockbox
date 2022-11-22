@@ -18,17 +18,13 @@
                 <li class="nav-header">PERSONAL</li>
 
                 <li class="nav-item">
-                    <a href="{{ route('profile') }}" class="nav-link">
+                    <a href="{{ route('profile') }}" class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-alt"></i>
                         <p>Profile</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                        @csrf
-                    </form>
-
                     <a
                         href="{{ route('logout') }}"
                         class="nav-link"
