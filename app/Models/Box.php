@@ -15,7 +15,7 @@ class Box extends Model
 
     protected $guarded = [];
 
-    protected $hidden = ['id'];
+    protected $hidden = ['id', 'user_id'];
 
     public function user(): BelongsTo
     {

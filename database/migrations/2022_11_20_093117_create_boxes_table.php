@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->uuid()->unique();
             $table->unsignedInteger('user_id');
-            $table->json('data');
+            $table->text('data');
             $table->softDeletes();
             $table->timestamps();
         });

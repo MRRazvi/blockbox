@@ -9,8 +9,15 @@ Route::middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::post('/profile/create-token', [ProfileController::class, 'createToken'])->name('profile.create-token');
     });
 
 Route::get('/', function () {})->name('home');
 Route::get('/terms', function () {})->name('terms');
 Route::get('/privacy', function () {})->name('privacy');
+
+Route::get('playground', function () {
+    foreach (auth()->user()->tokens as $token) {
+        dump($token);
+    }
+});
