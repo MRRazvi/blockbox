@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified'])
         Route::resource('/boxes', BoxController::class);
 
         Route::resource('/users', UserController::class);
+        Route::put('/users/{user}/password', [UserController::class, 'password'])->name('users.password');
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('/profile/create-token', [ProfileController::class, 'createToken'])->name('profile.create-token');
