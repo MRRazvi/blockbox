@@ -3,5 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <h1>Hello, World!</h1>
+    <x-alert type="danger" message="hi" />
+    <x-forms.input name="firstName" />
 @endsection
