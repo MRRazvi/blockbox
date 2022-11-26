@@ -85,11 +85,11 @@
                             </td>
                             <td>{{ $user->created_at->diffForHumans() }}</td>
                             <td>
-                                <a href="{{ route('users.edit', $user->id) }}" target="_blank">
+                                <a href="{{ route('users.edit', $user->id) }}" id="edit_user" target="_blank">
                                     <span class="fa fa-edit"></span>
                                 </a>
-                                <a href="#">
-                                    <span class="fa fa-cross"></span>
+                                <a href="#" class="text-danger" id="delete_user">
+                                    <span class="fa fa-trash"></span>
                                 </a>
                             </td>
                         </tr>
