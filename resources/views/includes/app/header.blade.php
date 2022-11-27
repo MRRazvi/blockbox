@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ @asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    @yield('styles')
     <link rel="stylesheet" href="{{ @asset('css/adminlte.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">

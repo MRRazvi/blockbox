@@ -17,7 +17,7 @@
 
                 <li class="nav-item {{ request()->routeIs('blocks.*') ? 'menu-open' : '' }}">
                     <a href="{{ route('blocks.index') }}" class="nav-link {{ request()->routeIs('blocks.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <i class="nav-icon fas fa-chain-broken"></i>
                         <p>
                             Blocks
                             <i class="right fas fa-angle-left"></i>
@@ -36,18 +36,12 @@
                                 <p>Check Integrity</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('blocks.key') }}" class="nav-link {{ request()->routeIs('blocks.key') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Verify Key</p>
-                            </a>
-                        </li>
                     </ul>
                 </li>
 
                 <li class="nav-item {{ request()->routeIs('boxes.*') ? 'menu-open' : '' }}">
                     <a href="{{ route('boxes.index') }}" class="nav-link {{ request()->routeIs('boxes.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <i class="nav-icon fas fa-box"></i>
                         <p>
                             Boxes
                             <i class="right fas fa-angle-left"></i>
@@ -68,6 +62,32 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item {{ request()->routeIs('tools.*') ? 'menu-open' : '' }}">
+                    <a href="{{ route('tools.key.generate') }}" class="nav-link {{ request()->routeIs('tools.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-wrench"></i>
+                        <p>
+                            Tools
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('tools.key.generate') }}" class="nav-link {{ request()->routeIs('tools.key.generate') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Generate Key</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('tools.key.verify.index') }}" class="nav-link {{ request()->routeIs('tools.key.verify.index') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Verify Key</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-header">ADMINISTRATOR</li>
 
                 <li class="nav-item {{ request()->routeIs('users.*') ? 'menu-open' : '' }}">
                     <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">

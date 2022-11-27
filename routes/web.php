@@ -4,6 +4,7 @@ use App\Http\Controllers\BlockController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,24 @@ Route::middleware(['auth', 'verified'])
 
         Route::get('/blocks', [BlockController::class, 'index'])->name('blocks.index');
         Route::get('/blocks/integrity', [BlockController::class, 'integrity'])->name('blocks.integrity');
-        Route::get('/blocks/key', [BlockController::class, 'key'])->name('blocks.key');
 
-        Route::resource('/boxes', BoxController::class);
+        Route::resource('/boxes', BoxController::class)->only(['index', 'create', 'show']);
+        Route::post('/boxes/{box}/decrypt', [BoxController::class, 'decrypt'])->name('boxes.decrypt');
+
+        Route::group([
+                'controller' => ToolsController::class,
+                'prefix' => 'tools',
+                'as' => 'tools.'
+            ], function () {
+                Route::group([
+                    'prefix' => 'key',
+                    'as' => 'key.'
+                ], function () {
+                        Route::get('/generate', 'keyGenerate')->name('generate');
+                        Route::get('/verify', 'keyVerifyIndex')->name('verify.index');
+                        Route::post('/verify', 'keyVerify')->name('verify');
+                    });
+            });
 
         Route::resource('/users', UserController::class);
         Route::put('/users/{user}/password', [UserController::class, 'password'])->name('users.password');
