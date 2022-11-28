@@ -29,6 +29,11 @@ class BoxController extends Controller
         return view('pages.app.boxes.create');
     }
 
+    public function store(Request $request)
+    {
+
+    }
+
     public function show(Box $box)
     {
         return view('pages.app.boxes.show', [

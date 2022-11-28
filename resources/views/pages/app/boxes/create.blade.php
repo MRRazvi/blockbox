@@ -8,10 +8,21 @@
             <div class="card-title">Create Box</div>
         </div>
         <div class="card-body">
-            <form action="{{ route('users.store') }}" method="POST">
+            <form action="{{ route('boxes.store') }}" method="POST">
                 @csrf
                 <x-forms.input name="key" />
-                <x-forms.input name="data" />
+
+                <div class="form-group">
+                    <label for="data" class="form-label">Data</label>
+                    <textarea class="form-control" id="data" rows="10" name="data"></textarea>
+
+                    @error('data')
+                        <span id="data-error" class="error invalid-feedback">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+
                 <x-button name="Create Box" />
             </form>
         </div>

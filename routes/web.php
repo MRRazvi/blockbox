@@ -16,7 +16,7 @@ Route::middleware(['auth', 'verified'])
         Route::get('/blocks', [BlockController::class, 'index'])->name('blocks.index');
         Route::get('/blocks/integrity', [BlockController::class, 'integrity'])->name('blocks.integrity');
 
-        Route::resource('/boxes', BoxController::class)->only(['index', 'create', 'show']);
+        Route::resource('/boxes', BoxController::class)->only(['index', 'create', 'show', 'store']);
         Route::post('/boxes/{box}/decrypt', [BoxController::class, 'decrypt'])->name('boxes.decrypt');
 
         Route::group([
