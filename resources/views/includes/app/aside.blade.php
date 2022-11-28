@@ -17,7 +17,7 @@
 
                 <li class="nav-item {{ request()->routeIs('blocks.*') ? 'menu-open' : '' }}">
                     <a href="{{ route('blocks.index') }}" class="nav-link {{ request()->routeIs('blocks.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chain-broken"></i>
+                        <i class="nav-icon fas fa-boxes"></i>
                         <p>
                             Blocks
                             <i class="right fas fa-angle-left"></i>
@@ -30,8 +30,18 @@
                                 <p>All Blocks</p>
                             </a>
                         </li>
+
+                        @if (auth()->user()->role == 'admin')
+                            <li class="nav-item">
+                                <a href="{{ route('blocks.create') }}" class="nav-link {{ request()->routeIs('blocks.create') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create Blocks</p>
+                                </a>
+                            </li>
+                        @endif
+
                         <li class="nav-item">
-                            <a href="{{ route('blocks.integrity') }}" class="nav-link {{ request()->routeIs('blocks.integrity') ? 'active' : '' }}">
+                            <a href="{{ route('blocks.integrity.index') }}" class="nav-link {{ request()->routeIs('blocks.integrity.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Check Integrity</p>
                             </a>
@@ -87,31 +97,33 @@
                     </ul>
                 </li>
 
-                <li class="nav-header">ADMINISTRATOR</li>
+                @if (auth()->user()->role == 'admin')
+                    <li class="nav-header">ADMINISTRATOR</li>
 
-                <li class="nav-item {{ request()->routeIs('users.*') ? 'menu-open' : '' }}">
-                    <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Users
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>All Users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('users.create') }}" class="nav-link {{ request()->routeIs('users.create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Create User</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="nav-item {{ request()->routeIs('users.*') ? 'menu-open' : '' }}">
+                        <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Users
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>All Users</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('users.create') }}" class="nav-link {{ request()->routeIs('users.create') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create User</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 <li class="nav-header">PERSONAL</li>
 

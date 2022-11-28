@@ -5,7 +5,7 @@
         name="{{ $name }}"
         id="{{ $name }} {{ $id }}"
         class="form-control {{ $class }} @error($name) is-invalid @enderror"
-        placeholder="{{ $placeholder}}"
+        placeholder="{{ $placeholder }}"
         value="{{ $value }}"
     />
 

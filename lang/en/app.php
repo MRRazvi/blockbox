@@ -6,6 +6,11 @@ return [
         'update' => 'User has been successfully updated.',
         'password' => 'User password has been successfully updated.',
     ],
+    'blocks' => [
+        'create' => [
+            'success' => 'Blocks has been successfully added to that user.'
+        ]
+    ],
     'boxes' => [
         'decrypt' => [
             'success' => 'Box has been successfully decrypted.',

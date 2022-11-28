@@ -26,4 +26,9 @@ class Block extends Model
     {
         return $this->hasMany(BlockMeta::class);
     }
+
+    public function node()
+    {
+        return $this->belongsTo(Node::class);
+    }
 }
