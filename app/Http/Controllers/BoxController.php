@@ -6,6 +6,7 @@ use App\Models\Box;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BoxController extends Controller
 {
@@ -31,7 +32,30 @@ class BoxController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'key' => 'required|string|min:32|max:32',
+            'data' => 'required'
+        ]);
 
+        try {
+            $encrypter = new Encrypter($request->key, 'aes-256-cbc');
+            $encrypted = $encrypter->encryptString($request->data);
+
+            $user = Auth::user();
+            $user->boxes()->create([
+                'uuid' => Str::uuid(),
+                'data' => $encrypted
+            ]);
+
+            return back()
+                ->withInput($request->input())
+                ->with('encrypted', $encrypted)
+                ->with('success', __('app.boxes.encrypt.success'));
+        } catch (\Exception $e) {
+            return back()
+                ->withInput($request->input())
+                ->with('error', __('app.boxes.encrypt.error'));
+        }
     }
 
     public function show(Box $box)
@@ -41,7 +65,7 @@ class BoxController extends Controller
         ]);
     }
 
-    public function decrypt(Box $box, Request $request)
+    public function showDecryptBox(Box $box, Request $request)
     {
         $request->validate([
             'key' => 'required|string|min:32|max:32'
@@ -49,11 +73,11 @@ class BoxController extends Controller
 
         try {
             $encrypter = new Encrypter($request->key, 'aes-256-cbc');
-            $decrypted = $encrypter->decryptString(json_decode($box->data));
+            $decrypted = $encrypter->decryptString($box->data);
 
             return back()
                 ->withInput($request->input())
-                ->with('data', $decrypted)
+                ->with('decrypted', $decrypted)
                 ->with('success', __('app.boxes.decrypt.success'));
         } catch (\Exception $e) {
             return back()

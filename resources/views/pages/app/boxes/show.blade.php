@@ -14,7 +14,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('boxes.decrypt', $box->id) }}" method="POST">
+            <form action="{{ route('boxes.show.decrypt', $box->id) }}" method="POST">
                 @csrf
                 <x-forms.input name="key" placeholder="Enter your key to decrypt the data" />
                 <x-button name="Decrypt" />
@@ -27,7 +27,7 @@
             <div class="card-title">Box: {{ $box->uuid }}</div>
         </div>
         <div class="card-body">
-            <pre><code class="language-json">{{ isset($data) ? $data : $box->data }}</code></pre>
+            <pre><code class="language-json">{{ session()->get('decrypted') ?? $box->data }}</code></pre>
         </div>
     </div>
 @endsection

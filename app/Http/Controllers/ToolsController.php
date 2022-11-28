@@ -33,11 +33,11 @@ class ToolsController extends Controller
 
         try {
             $encrypter = new Encrypter($request->key, 'aes-256-cbc');
-            $decrypted = $encrypter->decryptString(json_decode($request->encryption));
+            $decrypted = $encrypter->decryptString($request->encryption);
 
             return back()
                 ->withInput($request->input())
-                ->with('data', $decrypted)
+                ->with('decrypted', $decrypted)
                 ->with('success', __('app.boxes.decrypt.success'));
         } catch (\Exception $e) {
             return back()

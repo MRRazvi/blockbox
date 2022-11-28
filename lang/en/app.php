@@ -10,6 +10,10 @@ return [
         'decrypt' => [
             'success' => 'Box has been successfully decrypted.',
             'error' => 'Your key is invalid, please try with correct key.'
+        ],
+        'encrypt' => [
+            'success' => 'Box has been successfully encrypted.',
+            'error' => 'Your key is invalid, please try with correct key.'
         ]
     ]
 ];

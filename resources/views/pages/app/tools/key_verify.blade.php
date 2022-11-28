@@ -8,6 +8,10 @@
             <div class="card-title">Verify Key</div>
         </div>
         <div class="card-body">
+            @if(session()->has('decrypted'))
+                <x-alert type="success" message="{{ session()->get('decrypted') }}" />
+            @endif
+
             <form action="{{ route('tools.key.verify') }}" method="POST">
                 @csrf
                 <x-forms.input name="key" />
