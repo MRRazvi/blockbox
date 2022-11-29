@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Box;
+use App\Models\Node;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,12 +69,28 @@ class BoxController extends Controller
         try {
             $encrypter = new Encrypter($request->key, 'aes-256-cbc');
             $encrypted = $encrypter->encryptString($request->data);
+            $uuid = Str::uuid();
 
-            $user = Auth::user();
+            // store to main database
+            $user = auth()->user();
             $user->boxes()->create([
-                'uuid' => Str::uuid(),
+                'uuid' => $uuid,
                 'data' => $encrypted
             ]);
+
+            $blocks = $user->blocks;
+            foreach ($blocks as $block) {
+                $data = json_decode($block->data);
+                $node = Node::where('id', $data->node)->first();
+                $con = mysqli_connect(
+                    $node->host,
+                    $node->username,
+                    $node->password,
+                    $data->database
+                );
+
+                mysqli_query($con, "INSERT INTO boxes(uuid, user_id, data) VALUES('{$uuid}', {$user->id}, '{$encrypted}')");
+            }
 
             return back()
                 ->withInput($request->input())

@@ -6,6 +6,7 @@ use App\Models\Block;
 use App\Models\BlockMeta;
 use App\Models\Box;
 use App\Models\BoxMeta;
+use App\Models\Node;
 use App\Models\User;
 use App\Models\UserMeta;
 use Illuminate\Support\Str;
@@ -56,10 +57,33 @@ class DatabaseSeeder extends Seeder
                 ->create($admin);
         }
 
-        User::factory(10)
-            ->has(UserMeta::factory())
-            ->has(Block::factory()->has(BlockMeta::factory()))
-            ->has(Box::factory()->has(BoxMeta::factory()))
-            ->create();
+        $nodes = [
+            [
+                'connection' => 'mysql',
+                'host' => '127.0.0.1',
+                'port' => '3306',
+                'username' => 'root',
+                'password' => ''
+            ],
+            [
+                'connection' => 'mysql',
+                'host' => '127.0.0.1',
+                'port' => '3306',
+                'username' => 'root',
+                'password' => ''
+            ],
+            [
+                'connection' => 'mysql',
+                'host' => '127.0.0.1',
+                'port' => '3306',
+                'username' => 'root',
+                'password' => ''
+            ]
+        ];
+
+        foreach ($nodes as $node) {
+            Node::factory()
+                ->create($node);
+        }
     }
 }
