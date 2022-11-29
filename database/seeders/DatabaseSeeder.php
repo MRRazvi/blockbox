@@ -82,8 +82,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($nodes as $node) {
-            Node::factory()
-                ->create($node);
+            Node::create($node);
         }
     }
 }
