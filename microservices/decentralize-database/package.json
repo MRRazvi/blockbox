@@ -1,15 +1,25 @@
 {
+  "name": "blockbox-decentralize-database",
+  "version": "0.0.0",
+  "description": "Decentralized way to store critical data in the form of database, media files, etc.",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
   },
-  "name": "decentralize-database",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MRRazvi/blockbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MRRazvi/blockbox/issues"
+  },
+  "homepage": "https://github.com/MRRazvi/blockbox#readme"
 }
