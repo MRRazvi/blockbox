@@ -78,9 +78,11 @@ app.post('/api/v1/boxes', async (req, res) => {
     const seed = bip39.mnemonicToSeed(req.header('x-key')).slice(0, 32);
     const user = new driver.Ed25519Keypair(seed);
 
+    console.log(req.params.data, req.params.metadata)
+
     const txCreate = driver.Transaction.makeCreateTransaction(
-      req.body.data,
-      req.body.metadata,
+      req.params.data,
+      req.params.metadata,
       [
         driver.Transaction.makeOutput(
           driver.Transaction.makeEd25519Condition(user.publicKey)

@@ -36,7 +36,7 @@
                         class="form-control @error('metadata') is-invalid @enderror"
                         id="data"
                         rows="10"
-                        name="data"
+                        name="metadata"
                     >{{ old('metadata') }}</textarea>
 
                     @error('metadata')

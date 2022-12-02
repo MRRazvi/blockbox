@@ -46,8 +46,8 @@ class BoxController extends Controller
         $box = Http::withHeaders([
             'x-key' => 'blockbox'
         ])->post(sprintf('%s/boxes', env('API_PATH')), [
-            'data' => $request->data,
-            'metadata' => $request->metadata
+            'data' => json_encode($request->data),
+            'metadata' => json_encode($request->metadata)
         ])->json();
 
         dd($box);
