@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const driver = require('bigchaindb-driver');
+const bip39 = require('bip39');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -9,69 +10,120 @@ let app = express();
 app.server = http.createServer(app);
 app.use(express.json());
 
-app.get('/api/v1/boxes/:box', async (req, res) => {
-  const con = new driver.Connection(process.env.DRIVER_PATH);
-  const tx = await con.getTransaction(req.params.box);
-
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(tx));
-});
-
-app.post('/api/v1/boxes', async (req, res) => {
-  const con = new driver.Connection(process.env.DRIVER_PATH);
-  const user = new driver.Ed25519Keypair();
-
-  const txCreate = driver.Transaction.makeCreateTransaction(
-    req.body.data,
-    req.body.metadata,
-    [
-      driver.Transaction.makeOutput(
-        driver.Transaction.makeEd25519Condition(user.publicKey)
-      )
-    ],
-    user.publicKey
-  );
-
-  const txSigned = driver.Transaction.signTransaction(txCreate, user.privateKey);
-  con.postTransactionCommit(txSigned);
-
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(txSigned));
-});
-
-app.get('/api/v1/boxes/search/:search', async (req, res) => {
-  const con = new driver.Connection(process.env.DRIVER_PATH);
-  const assetList = await con.searchAssets(req.params.search);
-
-  const txList = [];
-  for (const asset of assetList) {
-    const tx = await con.getTransaction(asset.id);
-    txList.push(tx);
+// middleware
+app.use((req, res, next) => {
+  const key = req.header('x-key');
+  if (!key) {
+    res.status(404).json({
+      'code': 404,
+      'message': 'key not found'
+    });
+    return;
   }
 
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(txList));
+  next();
 });
 
-app.get('/api/v1/boxes/wallet/:wallet', async (req, res) => {
+// all boxes
+app.get('/api/v1/boxes', async (req, res) => {
   try {
     const con = new driver.Connection(process.env.DRIVER_PATH);
-    const txs = await con.listOutputs(req.params.wallet, false);
+    const seed = bip39.mnemonicToSeed(req.header('x-key')).slice(0, 32);
+    const user = new driver.Ed25519Keypair(seed);
+    const assets = await con.listOutputs(user.publicKey, false);
 
-    const assets = [];
-    for (const item of txs) {
-      const tx = await con.getTransaction(item.transaction_id);
-      assets.push(tx);
+    const txs = [];
+    for (const asset of assets) {
+      const tx = await con.getTransaction(asset.transaction_id);
+      txs.push(tx);
     }
 
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(assets));
+    res.status(200).json(txs);
   } catch (e) {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({
+    res.status(400).json({
       'code': 400,
-      'message': 'bad request, not found'
-    }));
+      'message': 'something goes wrong'
+    });
+  }
+});
+
+// get single box
+app.get('/api/v1/boxes/:box', async (req, res) => {
+  try {
+    const con = new driver.Connection(process.env.DRIVER_PATH);
+    const seed = bip39.mnemonicToSeed(req.header('x-key')).slice(0, 32);
+    const user = new driver.Ed25519Keypair(seed);
+    const tx = await con.getTransaction(req.params.box);
+
+    if (tx.outputs[0].public_keys[0] !== user.publicKey) {
+      res.status(403).json({
+        'code': 403,
+        'message': 'forbidden'
+      });
+    }
+
+    res.status(200).json(tx);
+  } catch (e) {
+    res.status(400).json({
+      'code': 400,
+      'message': 'something goes wrong'
+    });
+  }
+});
+
+// create box
+app.post('/api/v1/boxes', async (req, res) => {
+  try {
+    const con = new driver.Connection(process.env.DRIVER_PATH);
+    const seed = bip39.mnemonicToSeed(req.header('x-key')).slice(0, 32);
+    const user = new driver.Ed25519Keypair(seed);
+
+    const txCreate = driver.Transaction.makeCreateTransaction(
+      req.body.data,
+      req.body.metadata,
+      [
+        driver.Transaction.makeOutput(
+          driver.Transaction.makeEd25519Condition(user.publicKey)
+        )
+      ],
+      user.publicKey
+    );
+
+    const txSigned = driver.Transaction.signTransaction(txCreate, user.privateKey);
+    await con.postTransactionCommit(txSigned);
+
+    res.status(200).json(txSigned);
+  } catch (e) {
+    res.status(400).json({
+      'code': 400,
+      'message': 'something goes wrong'
+    });
+  }
+});
+
+// search box
+app.get('/api/v1/boxes/search/:search', async (req, res) => {
+  try {
+    const con = new driver.Connection(process.env.DRIVER_PATH);
+    const seed = bip39.mnemonicToSeed(req.header('x-key')).slice(0, 32);
+    const user = new driver.Ed25519Keypair(seed);
+    const assets = await con.searchAssets(req.params.search);
+
+    const txs = [];
+    for (const asset of assets) {
+      const tx = await con.getTransaction(asset.id);
+      console.log(tx.outputs[0].public_keys[0]);
+      if (tx.outputs[0].public_keys[0] === user.publicKey) {
+        txs.push(tx);
+      }
+    }
+
+    res.status(200).json(txs);
+  } catch (e) {
+    res.status(400).json({
+      'code': 400,
+      'message': 'something goes wrong'
+    });
   }
 });
 
