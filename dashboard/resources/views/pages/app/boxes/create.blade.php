@@ -14,8 +14,6 @@
 
             <form action="{{ route('boxes.store') }}" method="POST">
                 @csrf
-                <x-forms.input name="key" />
-
                 <div class="form-group">
                     <label for="data" class="form-label">Data</label>
                     <textarea
@@ -26,6 +24,22 @@
                     >{{ old('data') }}</textarea>
 
                     @error('data')
+                        <span id="data-error" class="error invalid-feedback">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="metadata" class="form-label">Metadata</label>
+                    <textarea
+                        class="form-control @error('metadata') is-invalid @enderror"
+                        id="data"
+                        rows="10"
+                        name="data"
+                    >{{ old('metadata') }}</textarea>
+
+                    @error('metadata')
                         <span id="data-error" class="error invalid-feedback">
                             {{ $message }}
                         </span>

@@ -13,21 +13,11 @@
 
 @section('content')
     <div class="card">
-        <div class="card-body">
-            <form action="{{ route('boxes.show.decrypt', $box->id) }}" method="POST">
-                @csrf
-                <x-forms.input name="key" placeholder="Enter your key to decrypt the data" />
-                <x-button name="Decrypt" />
-            </form>
-        </div>
-    </div>
-
-    <div class="card">
         <div class="card-header">
-            <div class="card-title">Box: {{ $box->uuid }}</div>
+            <div class="card-title">Box</div>
         </div>
         <div class="card-body">
-            <pre><code class="language-json">{{ session()->get('decrypted') ?? $box->data }}</code></pre>
+            <pre><code class="language-json">{{ json_encode($box, JSON_PRETTY_PRINT) }}</code></pre>
         </div>
     </div>
 @endsection

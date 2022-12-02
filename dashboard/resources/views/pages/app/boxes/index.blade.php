@@ -24,28 +24,30 @@
         <div class="card-body">
             <table class="table table-striped datatable" style="width:100%">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>UUID</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Operation</th>
+                        <th>Data</th>
+                        <th>Metadata</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach($boxes as $box)
-                    <tr>
-                        <td>{{ $box->id }}</td>
-                        <td>
-                            <a href="{{ route('boxes.show', $box->id) }}" target="_blank">{{ $box->uuid }}</a>
-                        </td>
-                        <td>{{ $box->created_at->diffForHumans() }}</td>
-                        <td>
-                            <a href="{{ route('boxes.show', $box->id) }}" id="edit_user" target="_blank">
-                                <span class="fa fa-eye"></span>
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach($boxes as $box)
+                        <tr>
+                            <td>
+                                <a href="{{ route('boxes.show', $box['id']) }}">{{ $box['id'] }}</a>
+                            </td>
+                            <td>{{ $box['operation'] }}</td>
+                            <td>{{ isset($box['asset']) ? 'YES' : 'NO' }}</td>
+                            <td>{{ isset($box['metadata']) ? 'YES' : 'NO' }}</td>
+                            <td>
+                                <a href="{{ route('boxes.show', $box['id']) }}" id="view_user">
+                                    <span class="fa fa-eye"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
